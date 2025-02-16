@@ -16,11 +16,11 @@ type Query {
   coffees: [Coffee!]!
 
   """Find coffee by id"""
-  coffee(id: ID!): Coffee
+  coffee(id: ID!): Coffee!
 }
 
 type Mutation {
-  createCoffee(createCoffeeInput: CreateCoffeeInput!): Coffee
+  createCoffee(createCoffeeInput: CreateCoffeeInput!): Coffee!
 }
 
 """Create new coffee"""

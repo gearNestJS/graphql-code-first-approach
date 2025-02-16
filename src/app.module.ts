@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { CoffeesModule } from './coffees/coffees.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -15,6 +16,16 @@ import { CoffeesModule } from './coffees/coffees.module';
       buildSchemaOptions: {
         numberScalarMode: 'integer',
       },
+    }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5434,
+      username: 'postgres',
+      password: 'password123',
+      database: 'postgres',
+      autoLoadEntities: true,
+      synchronize: true,
     }),
     CoffeesModule,
   ],

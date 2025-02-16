@@ -9,21 +9,22 @@ export class CoffeesResolver {
   constructor(private readonly coffeesService: CoffeesService) {}
 
   @Query(() => [Coffee], { name: 'coffees', description: 'Find all coffee' })
-  getAllCoffees() {
-    return this.coffeesService.getAllCoffees();
+  async getAllCoffees() {
+    return await this.coffeesService.getAllCoffees();
   }
 
   @Query(() => Coffee, {
     name: 'coffee',
-    nullable: true,
     description: 'Find coffee by id',
   })
-  getOneCoffee(@Args('id', { type: () => ID }, ParseIntPipe) id: number) {
-    return this.coffeesService.getOneCoffee(id);
+  async getOneCoffee(@Args('id', { type: () => ID }, ParseIntPipe) id: number) {
+    return await this.coffeesService.getOneCoffee(id);
   }
 
-  @Mutation(() => Coffee, { name: 'createCoffee', nullable: true })
-  create(@Args('createCoffeeInput') createCoffeeInput: CreateCoffeeInput) {
-    return this.coffeesService.createCoffee(createCoffeeInput);
+  @Mutation(() => Coffee, { name: 'createCoffee' })
+  async create(
+    @Args('createCoffeeInput') createCoffeeInput: CreateCoffeeInput,
+  ) {
+    return await this.coffeesService.createCoffee(createCoffeeInput);
   }
 }
