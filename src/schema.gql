@@ -21,6 +21,8 @@ type Query {
 
 type Mutation {
   createCoffee(createCoffeeInput: CreateCoffeeInput!): Coffee!
+  updateCoffee(id: Int!, updateCoffeeInput: UpdateCoffeeInput!): Coffee!
+  removeCoffee(id: Int!): Coffee!
 }
 
 """Create new coffee"""
@@ -29,4 +31,12 @@ input CreateCoffeeInput {
   name: String!
   brand: String!
   flavors: [String!]!
+}
+
+"""Update Coffee"""
+input UpdateCoffeeInput {
+  """The name of coffee"""
+  name: String
+  brand: String
+  flavors: [String!]
 }
