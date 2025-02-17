@@ -20,8 +20,13 @@ type Query {
 }
 
 type Mutation {
+  """Create a new Coffee"""
   createCoffee(createCoffeeInput: CreateCoffeeInput!): Coffee!
+
+  """Update existing Coffee"""
   updateCoffee(id: Int!, updateCoffeeInput: UpdateCoffeeInput!): Coffee!
+
+  """Remove existing Coffee"""
   removeCoffee(id: Int!): Coffee!
 }
 
