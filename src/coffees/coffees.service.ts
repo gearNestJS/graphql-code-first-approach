@@ -45,7 +45,14 @@ export class CoffeesService {
    * @returns {Promise<Coffee>}
    */
   async createCoffee(createCoffeeInput: CreateCoffeeInput): Promise<Coffee> {
-    const coffee = this.coffeesRepository.create(createCoffeeInput);
+    const flavors = await Promise.all(
+      createCoffeeInput.flavors.map((name) => this.preloadFlavorByName(name)),
+    );
+
+    const coffee = this.coffeesRepository.create({
+      ...createCoffeeInput,
+      flavors,
+    });
 
     return await this.coffeesRepository.save(coffee);
   }
@@ -60,9 +67,16 @@ export class CoffeesService {
     id: number,
     updateCoffeeInput: UpdateCoffeeInput,
   ): Promise<Coffee> {
+    const flavors =
+      updateCoffeeInput.flavors &&
+      (await Promise.all(
+        updateCoffeeInput.flavors.map((name) => this.preloadFlavorByName(name)),
+      ));
+
     const coffee = await this.coffeesRepository.preload({
       id,
       ...updateCoffeeInput,
+      flavors,
     });
 
     if (!coffee) {
